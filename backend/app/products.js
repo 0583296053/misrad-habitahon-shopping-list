@@ -41,11 +41,22 @@ const addProduct = async (req, res) => {
   }
 };
 
-const getProducts = async (req, res) => {
+const getProductsByCategories = async (req, res) => {
   try {
-    const products = await Categories.find({});
+    const products = await Products.find({}).lean();
 
-    res.send(products);
+    const productsByCategories = products.reduce((m, product) => {
+      const { category } = product;
+
+      if (!m[category]) { // ^ ._id ?
+        m[category] = [];
+      }
+      m[category].push(product);
+
+      return m;
+    }, {});
+
+    res.send(productsByCategories);
   } catch (err) {
     const statusCode = err instanceof CustomError
       ? err.statusCode
@@ -69,8 +80,24 @@ const getProductsCount = async (req, res) => {
   }
 };
 
+const getCategories = async (req, res) => {
+  try {
+    const categories = await Categories.find({});
+
+    res.send(categories);
+  } catch (err) {
+    const statusCode = err instanceof CustomError
+      ? err.statusCode
+      : 500;
+
+    res.status(statusCode).send(err);
+  }
+};
+
+
 module.exports = {
   addProduct,
-  getProducts,
-  getProductsCount
+  getProductsByCategories,
+  getProductsCount,
+  getCategories
 };

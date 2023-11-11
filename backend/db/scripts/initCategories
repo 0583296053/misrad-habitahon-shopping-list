@@ -1,17 +1,17 @@
 db.Categories.insertMany([
   {
-    name: 'Cleaning Products'
+    name: 'מוצרי ניקיון'
   },
   {
-    name: 'Cheeses'
+    name: 'גבינות'
   },
   {
-    name: 'Vegetables and Fruits'
+    name: 'ירקות ופירות'
   },
   {
-    name: 'Meat and Fish'
+    name: 'בשר ודגים'
   },
   {
-    name: 'Pastries'
+    name: 'מאפים'
   }
 ]);
