@@ -1,0 +1,17 @@
+db.Categories.insertMany([
+  {
+    name: 'Cleaning Products'
+  },
+  {
+    name: 'Cheeses'
+  },
+  {
+    name: 'Vegetables and Fruits'
+  },
+  {
+    name: 'Meat and Fish'
+  },
+  {
+    name: 'Pastries'
+  }
+]);
