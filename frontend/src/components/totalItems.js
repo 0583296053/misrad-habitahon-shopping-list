@@ -1,29 +1,22 @@
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Select,
-  MenuItem,
-  InputLabel
-} from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import ProductsService from '../services/productsService';
 
 export default function TotalItems() {
   const [productsCount, setProductsCount] = useState(0);
 
+  const getProductsCount = async () => {
+    ProductsService.getProductsCount()
+      .then(response => {
+        setProductsCount(response.data.productsCount);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
   useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const response = await fetch(
-          'http://localhost:4000/products_count'
-        );
-        const data = await response.json();
-        setProductsCount(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    getProductsCount();
   }, []);
 
   return (
