@@ -48,7 +48,7 @@ const getProductsByCategories = async (req, res) => {
     const productsByCategories = products.reduce((m, product) => {
       const { category } = product;
 
-      if (!m[category]) { // ^ ._id ?
+      if (!m[category]) {
         m[category] = [];
       }
       m[category].push(product);

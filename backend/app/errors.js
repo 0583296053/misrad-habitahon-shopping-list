@@ -11,8 +11,6 @@ class NotFoundError extends CustomError {
   }
 };
 
-// TODO: Fix show errors msg
-
 module.exports = {
   CustomError,
   NotFoundError
