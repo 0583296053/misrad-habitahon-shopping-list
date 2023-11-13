@@ -1,23 +1,10 @@
+import React from 'react';
 import { Typography, Box } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import ProductsService from '../services/productsService';
+import { observer } from 'mobx-react';
+import { useStore } from '../itemsStore';
 
-export default function TotalItems() {
-  const [productsCount, setProductsCount] = useState(0);
-
-  const getProductsCount = async () => {
-    ProductsService.getProductsCount()
-      .then(response => {
-        setProductsCount(response.data.productsCount);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
-  useEffect(() => {
-    getProductsCount();
-  }, []);
+const TotalItems = observer(() => {
+  const itemsStore = useStore();
 
   return (
     <Box
@@ -29,8 +16,10 @@ export default function TotalItems() {
       }}
     >
       <div>
-        <Typography sx={{ mt: 3 }} align='left' color='primary' variant="h5">סה"כ: {productsCount} מוצרים</Typography>
+        <Typography sx={{ mt: 3 }} align='left' color='primary' variant="h5">סה"כ: {itemsStore.totalItems} מוצרים בסל</Typography>
       </div>
     </Box>
   );
-}
+});
+
+export default TotalItems;

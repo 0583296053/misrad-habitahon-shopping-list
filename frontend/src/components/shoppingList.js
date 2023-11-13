@@ -8,8 +8,12 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import TotalItems from './totalItems';
 import ProductsService from '../services/productsService';
+import { observer } from 'mobx-react';
+import { useStore } from '../itemsStore';
 
-export default function ShoppingList() {
+const ShoppingList = observer(() => {
+  const itemsStore = useStore();
+
   const [categories, setCategories] = useState([]);
   const [productsByCategories, setProductsByCategories] = useState([]);
   const [productName, setProductName] = useState('');
@@ -35,7 +39,6 @@ export default function ShoppingList() {
     getCategories();
   }, []);
 
-
   const getProductsByCategories = async () => {
     ProductsService.getProductsByCategories()
       .then(response => {
@@ -47,8 +50,13 @@ export default function ShoppingList() {
       });
   };
 
+  const setTotalItems = async () => {
+    itemsStore.setTotalItems();
+  };
+
   useEffect(() => {
     getProductsByCategories();
+    setTotalItems();
   }, [refreshProductsByCategories]);
 
   const handleProductNameChange = event => {
@@ -199,4 +207,6 @@ export default function ShoppingList() {
       </Box >
     </Grid>
   );
-}
+});
+
+export default ShoppingList;
